@@ -1,0 +1,103 @@
+
+
+/*#@import url("reset.css"); */
+
+body {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    color:rgb(14, 13, 13);
+    text-align:center;
+    
+   
+}
+
+p {
+    padding: 10px;
+}
+
+#wrapper {
+    margin: 0 auto;
+    width: 1300px;
+       
+}
+
+#headerwrap {
+    width: 1300px;
+    float: left;
+    margin: 0 auto;
+    
+    
+}
+
+#header {
+    height: 75px;
+    background: #2440a5;
+    background-image: url("/assets/corona10.jpg");
+    /*background-attachment: fixed;*/
+    border-radius: 10px;
+    border: 1px solid #2440a5;
+    margin: 5px;
+    color: white;
+}
+
+#leftcolumnwrap {
+    width: 300px;
+    float: left;
+    margin: 0 auto;
+}
+
+#leftcolumn {
+    background: white;
+    border-radius: 10px;
+    border: 2px solid #2440a5;
+    margin: 5px;
+    font-size: 14px;
+}
+
+
+#contentwrap {
+    width: 1000;
+    float: left;
+    margin: 0 auto;
+}
+
+#content {
+    background:white;
+    font-size: 13px;
+    border-radius: 10px;
+    border: 2px solid #2440a5;
+    margin: 5px;
+}
+
+#footerwrap {
+    width: 1300px;
+    float: left;
+    margin: 0 auto;
+    clear: both;
+}
+h2 {
+    color:  #2440a5; /* Устанавливаем цвет линии */
+    font-size: 16px;
+    text-align:center;
+}
+h3 {
+    font-size: 14px;
+    text-align:center;
+}
+
+#footer {
+    height: 40px;
+    background: #2440a5;
+    background-image: url("/assets/corona10.jpg");
+    border-radius: 10px;
+    border: 2px solid #2440a5;
+    margin: 5px;
+    color: white;
+}
+
+hr {
+        color:  #2440a5; /* Устанавливаем цвет линии */
+        background-color:  #2440a5; /* Для кроссбраузерности (Opera и Mozilla Firefox) */
+        height: 3px; /* Задаем толщину */
+        border: none; /* Отменяем отображение границы (в браузере Firefox) */
+       }
