@@ -3,8 +3,6 @@ import datetime
 import plotly.graph_objects as go
 import plotly.express as px
 import plotly.figure_factory as ff
-# import locale
-# locale.setlocale(locale.LC_ALL, "ru_RU.UTF-8")
 
 yandex_russia = pd.read_csv('yandex_russia.csv')
 
