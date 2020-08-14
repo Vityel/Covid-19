@@ -72,7 +72,9 @@ app.layout = html.Div(id="wrapper",
 
         html.Div(id="footer",
          children=[
-         html.H3('Данные: Яндекс')
+         html.H3('Данные: Яндекс'),
+         html.H3('Разработка сайта: Виталий Елагин, vityel@gmail.com'),
+         
          ])
                                                                          
      ])
