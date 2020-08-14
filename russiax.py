@@ -174,8 +174,10 @@ def func_fig_r5(my_region):
     return fig_r5
 
 mask = (X.Date>=datetime.date(2020,7,30))&(X.Region.isin(regions_towatch))
+def my_round(k):
+    return round(k,3)
 
-Z = X[mask].groupby(['Region','Date']).Rt.sum().unstack().reset_index()
+Z = X[mask].groupby(['Region','Date']).Rt.sum().apply(my_round).unstack().reset_index()
 Z.dropna(inplace=True)
 d = Z.drop('Region',axis = 1).values
 x1=list(Z.columns[1:])

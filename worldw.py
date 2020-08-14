@@ -162,8 +162,9 @@ def func_fig_w5(my_country):
     return fig_w5
 
 mask = (W.Date>=datetime.date(2020,7,30))&(W.Country.isin(country_towatch))
-
-Y = W[mask].groupby(['Country','Date']).Rt.sum().unstack().reset_index()
+def my_round(k):
+    return round(k,3)
+Y = W[mask].groupby(['Country','Date']).Rt.sum().apply(my_round).unstack().reset_index()
 Y.dropna(inplace=True)
 D = Y.drop('Country',axis = 1).values
 x_1=list(Y.columns[1:])
