@@ -173,7 +173,7 @@ def func_fig_r5(my_region):
                   yaxis_title = ' ')
     return fig_r5
 
-mask = (X.Date>=datetime.date(2020,7,30))&(X.Region.isin(regions_towatch))
+mask = (X.Date>=datetime.date(2020,7,31))&(X.Region.isin(regions_towatch))
 def my_round(k):
     return round(k,3)
 
