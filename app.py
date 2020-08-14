@@ -2,8 +2,8 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
-from russia import * 
-from world import * 
+from russiax import * 
+from worldw import * 
 
 chart_dict_r = {'Новые заболевшие':func_fig_r2, 'Изменения в новых больных':func_fig_r3,
 'Текущие больные':func_fig_r4,'Изменения в текущих больных':func_fig_r5, 'Rt':func_fig_r6,
@@ -14,6 +14,7 @@ chart_dict_w = {'Новые заболевшие':func_fig_w2, 'Изменени
 'Всего больных':func_fig_w7,'Рейтинги':func_fig_w1}
 
 app = dash.Dash(__name__)
+server = app.server
 
 app.title='COVID-19 в динамике'
 app.layout = html.Div(id="wrapper",
