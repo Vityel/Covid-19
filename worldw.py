@@ -3,6 +3,7 @@ import datetime
 import plotly.graph_objects as go
 import plotly.express as px
 import plotly.figure_factory as ff
+from plotly.subplots import make_subplots
 
 
 W=pd.read_csv('W.csv')
@@ -161,7 +162,10 @@ def func_fig_w5(my_country):
                   yaxis_title = ' ')
     return fig_w5
 
-mask = (W.Date>=datetime.date(2020,7,30))&(W.Country.isin(country_towatch))
+delta = datetime.timedelta(14)
+past14=mydayw-delta
+
+mask = (W.Date>=past14)&(W.Country.isin(country_towatch))
 def my_round(k):
     return round(k,3)
 Y = W[mask].groupby(['Country','Date']).Rt.sum().apply(my_round).unstack().reset_index()
@@ -212,6 +216,7 @@ def func_fig_w7(my_region):
     return fig_w7
 
 def func_fig_w8(my_region):
+
     fig_w8  = go.Figure(data=[go.Pie(labels=df_2.Country, values=df_2.Remaining_ill, textinfo='label+percent',
                              insidetextorientation='radial'
                             )])
@@ -224,3 +229,35 @@ def func_fig_w8(my_region):
                   title_xanchor = "center",
                   title_yanchor = "bottom")
     return fig_w8
+
+delta = datetime.timedelta(7)
+past7=mydayw-delta
+mask = (W.Date>=past7)&(W.Country.isin(country_towatch))&(W.Country!='Весь мир')
+                                      
+box_cases3 = W[mask].groupby(['Country','Date'])['Day_confirmed'].sum()
+box_cases4 = W[mask].groupby(['Country','Date'])['Day_recovered'].sum()
+new_df3=box_cases3.unstack().T
+new_df4=box_cases4.unstack().T
+cols1 = list(new_df3.columns)
+color_dict1=dict(zip(cols1,['green','darkblue','goldenrod','magenta','red']))
+
+def func_fig_w9(my_region):
+    fig_w9 = make_subplots(rows=2, cols=1,specs = [[{}],[{}]],vertical_spacing = 0.03,shared_xaxes=True,
+                  subplot_titles=("Box-график распределения по новым заболевшим(в день) за неделю:",
+                                 "Box-график распределения по выздоровевшим(в день) за неделю:"))
+
+    for i in cols1:
+        fig_w9.add_trace(
+        go.Box(x=new_df3[i],name = i,boxmean = True,marker_color = color_dict1.get(i)),row=1,col=1)
+
+    for i in cols1:
+        fig_w9.add_trace(
+        go.Box(x=new_df4[i],name = i,boxmean=True,marker_color = color_dict1.get(i)),row=2,col=1)
+
+
+    fig_w9.update_layout(
+                 width = 900, height = 1200,
+                 showlegend=True,template ='ggplot2')
+    return fig_w9
+    
+

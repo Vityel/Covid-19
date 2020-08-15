@@ -7,11 +7,11 @@ from worldw import *
 
 chart_dict_r = {'Новые заболевшие':func_fig_r2, 'Изменения в новых больных':func_fig_r3,
 'Текущие больные':func_fig_r4,'Изменения в текущих больных':func_fig_r5, 'Rt':func_fig_r6,
-'Всего больных':func_fig_r7,'Рейтинги':func_fig_r1}
+'Всего больных':func_fig_r7,'Рейтинги':func_fig_r1,'Boxes':func_fig_r9}
 
 chart_dict_w = {'Новые заболевшие':func_fig_w2, 'Изменения в новых больных':func_fig_w3,
 'Текущие больные':func_fig_w4,'Изменения в текущих больных':func_fig_w5, 'Rt':func_fig_w6,
-'Всего больных':func_fig_w7,'Рейтинги':func_fig_w1}
+'Всего больных':func_fig_w7,'Рейтинги':func_fig_w1,'Boxes':func_fig_w9}
 
 app = dash.Dash(__name__)
 server = app.server

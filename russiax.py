@@ -3,6 +3,8 @@ import datetime
 import plotly.graph_objects as go
 import plotly.express as px
 import plotly.figure_factory as ff
+from plotly.subplots import make_subplots
+
 
 
 X=pd.read_csv('X.csv')
@@ -173,7 +175,9 @@ def func_fig_r5(my_region):
                   yaxis_title = ' ')
     return fig_r5
 
-mask = (X.Date>=datetime.date(2020,7,31))&(X.Region.isin(regions_towatch))
+delta = datetime.timedelta(14)
+past14=myday-delta
+mask = (X.Date>=past14)&(X.Region.isin(regions_towatch))
 def my_round(k):
     return round(k,3)
 
@@ -241,3 +245,33 @@ def func_fig_r8(my_region):
                   title_yanchor = "bottom")
                      
     return fig_r8
+
+delta = datetime.timedelta(7)
+past7=myday-delta
+mask = (X.Date>=past7)&(X.Region.isin(regions_towatch))&(X.Region!='Россия')
+                                      
+box_cases1 = X[mask].groupby(['Region','Date'])['Day_confirmed'].sum()
+box_cases2 = X[mask].groupby(['Region','Date'])['Day_recovered'].sum()
+new_df1=box_cases1.unstack().T
+cols = list(new_df1.columns)
+color_dict=dict(zip(cols,['green','darkblue','goldenrod','magenta','red']))
+new_df2=box_cases2.unstack().T
+def func_fig_r9(my_region):
+    fig_r9 = make_subplots(rows=2, cols=1,specs = [[{}],[{}]],vertical_spacing = 0.03,shared_xaxes=True,
+                  subplot_titles=("Box-график распределения по новым заболевшим(в день) за неделю:",
+                                 "Box-график распределения по выздоровевшим(в день) за неделю:"))
+
+    for i in cols:
+        fig_r9.add_trace(
+        go.Box(x=new_df1[i],name = i,boxmean = True,marker_color = color_dict.get(i)),row=1,col=1)
+
+    for i in cols:
+        fig_r9.add_trace(
+        go.Box(x=new_df2[i],name = i,boxmean=True,marker_color = color_dict.get(i)),row=2,col=1)
+
+    fig_r9.update_layout(
+                  width = 900, height = 1200,
+                 showlegend=True,template ='ggplot2')
+    return fig_r9
+
+
