@@ -17,12 +17,12 @@ p {
 
 #wrapper {
     margin: 0 auto;
-    width: 1300px;
+    width: 1400px;
        
 }
 
 #headerwrap {
-    width: 1300px;
+    width: 1400px;
     float: left;
     margin: 0 auto;
     
@@ -70,7 +70,7 @@ p {
 }
 
 #footerwrap {
-    width: 1300px;
+    width: 1400px;
     float: left;
     margin: 0 auto;
     clear: both;
