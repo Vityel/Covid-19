@@ -22,16 +22,16 @@ Covid_Rates_w = pd.DataFrame()
 mask = (W.Date==mydayw)&(W.Country!='Весь мир')
 Today_cases_w = W[mask]
 
-Covid_Rates_w['По количеству текущих больных'] = Today_cases_w.sort_values(by=['Remaining_ill'],ascending = False).Country.reset_index(drop=True)
+Covid_Rates_w['По количеству текущих<br>больных'] = Today_cases_w.sort_values(by=['Remaining_ill'],ascending = False).Country.reset_index(drop=True)
 Covid_Rates_w['По количеству новых'] = Today_cases_w.sort_values(by=['Day_confirmed'],ascending = False).Country.reset_index(drop=True)
 Covid_Rates_w['По умершим за день'] = Today_cases_w.sort_values(by=['Day_deaths'],ascending = False).Country.reset_index(drop=True)
-Covid_Rates_w['По выздоровевшим за день'] = Today_cases_w.sort_values(by=['Day_recovered'],ascending = False).Country.reset_index(drop=True)
-
+Covid_Rates_w['По выздоровевшим<br>за день'] = Today_cases_w.sort_values(by=['Day_recovered'],ascending = False).Country.reset_index(drop=True)
+param = {'xgap':0}
 def func_fig_w1(region):
-    fig_w1 =  ff.create_table(Covid_Rates_w.head(15))
+    fig_w1 =  ff.create_table(Covid_Rates_w.head(15),height_constant=200,**param)
     fig_w1.update_layout(
                   title_text ='Таблица рейтингов заболеваемости COVID-19 по странам',
-                  margin = {'t':100, 'b':100},
+                  margin = {'t':50, 'b':100},
                   title_x = 0.5,
                   title_y= 0.95,
                   title_xanchor = "center",
@@ -41,11 +41,13 @@ def func_fig_w1(region):
     
     
                   xaxis_title='',yaxis_title = '')
+    for i in range(0,4):
+        fig_w1.layout.annotations[i].font.size = 10
      
     return fig_w1
 
-country_number = 5
-country_towatch = list(Covid_Rates_w['По количеству текущих больных'].head(country_number))
+country_number = 10
+country_towatch = list(Covid_Rates_w['По количеству текущих<br>больных'].head(country_number))
 
 def func_fig_w2(my_country):
     mask = W.Country ==my_country
@@ -79,7 +81,7 @@ def func_fig_w2(my_country):
                   title_y= 0.9,
                   title_xanchor = "center",
                   title_yanchor = "bottom", 
-                  legend_x = 0.05,legend_y = 0.95,
+                  legend_x = 0.01,legend_y = 1,
                   width = 900, height = 600,template = 'gridon',
                   xaxis_title='',yaxis_title = ' '
      )
@@ -89,7 +91,7 @@ def func_fig_w3(my_country):
     mask = W.Country ==my_country
     fig_w3 = go.Figure()
     fig_w3.add_trace(
-              go.Bar(x = W.Date,y=W[mask].Change_dayconf,text = W[mask]['Change_dayconf'],textposition = 'inside',
+              go.Bar(x = W.Date,y=W[mask].Change_dayconf,text = W[mask]['Change_dayconf'],textposition = 'inside',hoverinfo='x+y',
                  marker_color = W[mask]['Change_dayconf'],marker_colorscale = 'Temps',marker_colorbar ={'tickmode':'auto',
                                     'title':{'text':'Изменение','side':'top'}}
                     )   
@@ -137,7 +139,7 @@ def func_fig_w4(my_country):
             title_y= 0.9,
             title_xanchor = "center",
             title_yanchor = "bottom", 
-            legend_x = 0.05,legend_y = 0.98,
+            legend_x = 0.01,legend_y = 1,
             width = 900, height = 600,template = 'gridon',
             xaxis_title='Текущие больные = количество выявленных - количество выздоровевших - количество умерших',
             yaxis_title = ' ')
@@ -146,7 +148,7 @@ def func_fig_w5(my_country):
     mask = W.Country ==my_country
     fig_w5 = go.Figure()
     fig_w5.add_trace(
-         go.Bar(x = W[mask].Date,y=W[mask].Change_remill,text = W[mask]['Change_remill'],textposition = 'inside',
+         go.Bar(x = W[mask].Date,y=W[mask].Change_remill,text = W[mask]['Change_remill'],textposition = 'inside',hoverinfo='x+y',
          marker_color = W[mask]['Change_remill'],marker_colorscale = 'Temps',marker_colorbar ={'tickmode':'auto',
         'title':{'text':'Изменение','side':'top'}})     
                 )
@@ -179,7 +181,7 @@ for i in x_1:
 y_1=list(Y.Country)
 
 def func_fig_w6(my_region):
-    fig_w6 = ff.create_annotated_heatmap(D, x=x_2, y=y_1, annotation_text=D,
+    fig_w6 = ff.create_annotated_heatmap(D, x=x_2, y=y_1, annotation_text=D,hoverinfo='z',
                                   colorscale='Temps')
 
     fig_w6.update_layout(
@@ -239,7 +241,7 @@ box_cases4 = W[mask].groupby(['Country','Date'])['Day_recovered'].sum()
 new_df3=box_cases3.unstack().T
 new_df4=box_cases4.unstack().T
 cols1 = list(new_df3.columns)
-color_dict1=dict(zip(cols1,['green','darkblue','goldenrod','magenta','red']))
+color_dict1=dict(zip(cols1,['forestgreen','darkblue','goldenrod','magenta','hotpink','grey','maroon','coral','darkorange','lightpink']))
 
 def func_fig_w9(my_region):
     fig_w9 = make_subplots(rows=2, cols=1,specs = [[{}],[{}]],vertical_spacing = 0.03,shared_xaxes=True,

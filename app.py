@@ -35,17 +35,17 @@ app.layout = html.Div(id="wrapper",
         
         html.Div(id="leftcolumn",
          children=[
-         html.H2('Страна/Регион'),
-         dcc.RadioItems(
-             id='area',
-             options=[{'label': k, 'value': k} for k in ['Россия','Весь мир']],
-             value='Россия'),
+
+             
+         html.H2('Анализ динамики:'),
          html.Hr(),
-         dcc.Dropdown(
-                id='regions'
-                # options=[{'label': i, 'value': i} for i in regions_dict.values()],
-                # value='Россия'
-            )
+         dcc.RadioItems(
+                id='chart-type',
+                options=[{'label': i, 'value': i} for i in chart_dict_r.keys()],
+                value='Новые заболевшие',
+                labelStyle={'display': 'flex','justify-content': 'left','align-items': 'left'}
+                )
+
          ])
 
      ]),
@@ -55,14 +55,24 @@ app.layout = html.Div(id="wrapper",
         
         html.Div(id="content",
          children=[
-         html.H2('Анализ динамики:'),
+
+             html.H2('Страна/Регион'),
          dcc.RadioItems(
-                id='chart-type',
-                options=[{'label': i, 'value': i} for i in chart_dict_r.keys()],
-                value='Всего больных',
-                labelStyle={'display': 'inline-block'}),
+             id='area',
+             options=[{'label': k, 'value': k} for k in ['Россия','Весь мир']],
+             value='Россия',
+             labelStyle={'display': 'inline-block'}),
+         html.Hr(),
+         dcc.Dropdown(
+                id='regions'
+            ),
+
+
+
          html.Hr(),
          dcc.Graph(id='main-graph')
+
+
          ])
                                                      
      ]),
@@ -81,19 +91,18 @@ app.layout = html.Div(id="wrapper",
                                                                 
  ])                                 
 @app.callback(
-    Output('regions', 'options'),
+    [Output('regions', 'options'),Output('regions', 'value')],
     [Input('area', 'value')])
 def set_regions_options(selected_area):
     if selected_area=="Россия":
-        return [{'label': i, 'value': i} for i in regions_dict.values() ]
-    else: return [{'label': i, 'value': i} for i in country_dict.values() ]
+        return [{'label': i, 'value': i} for i in regions_dict.values() ],regions_dict.get(42)
+    else: return [{'label': i, 'value': i} for i in country_dict.values() ],country_dict.get(132)
 
-
-@app.callback(
-    Output('regions', 'value'),
-    [Input('regions', 'options')])
-def set_regions_value(available_options):
-    return available_options[0]['value']
+# @app.callback(
+#     Output('regions', 'value'),
+#     [Input('regions', 'options')])
+# def set_regions_value(available_options):
+#     return available_options[41]['value']
 
 
 @app.callback(

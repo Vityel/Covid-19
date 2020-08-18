@@ -24,17 +24,17 @@ mask = (X.Date==myday)&(X.Region!='Россия')
 today_cases = X[mask]
 #covid_rates.reset_index(drop=True)
 
-covid_rates['По количеству текущих больных'] = today_cases.sort_values(by=['Remaining_ill'],ascending = False).Region.reset_index(drop=True)
+covid_rates['По количеству текущих<br>больных'] = today_cases.sort_values(by=['Remaining_ill'],ascending = False).Region.reset_index(drop=True)
 covid_rates['По количеству новых'] = today_cases.sort_values(by=['Day_confirmed'],ascending = False).Region.reset_index(drop=True)
 covid_rates['По умершим за день'] = today_cases.sort_values(by=['Day_deaths'],ascending = False).Region.reset_index(drop=True)
-covid_rates['По выздоровевшим за день'] = today_cases.sort_values(by=['Day_recovered'],ascending = False).Region.reset_index(drop=True)
-
+covid_rates['По выздоровевшим<br>за день'] = today_cases.sort_values(by=['Day_recovered'],ascending = False).Region.reset_index(drop=True)
+param = {'xgap':0}
 def func_fig_r1(region):
-    fig_r1 =  ff.create_table(covid_rates.head(15))
+    fig_r1 =  ff.create_table(covid_rates.head(15),height_constant=200,**param)
     fig_r1.update_layout(
     
                   title_text ='Таблица рейтингов заболеваемости COVID-19 по регионам',
-                  margin = {'t':100, 'b':100},
+                  margin = {'t':50, 'b':100},
                   title_x = 0.5,
                   title_y= 0.95,
                   title_xanchor = "center",
@@ -43,14 +43,15 @@ def func_fig_r1(region):
                   width = 900, height = 600,template = 'gridon',
     
     
-                  xaxis_title='',yaxis_title = ''
-     )
+                  xaxis_title='',yaxis_title = '')
+    for i in range(0,4):
+        fig_r1.layout.annotations[i].font.size = 10
     return fig_r1
 
 
 
-region_number = 5
-regions_towatch = list(covid_rates['По количеству текущих больных'].head(region_number))
+region_number = 10
+regions_towatch = list(covid_rates['По количеству текущих<br>больных'].head(region_number))
 regions_towatch.append("Россия")
 
 
@@ -86,7 +87,7 @@ def func_fig_r2(my_region):
                   title_y= 0.9,
                   title_xanchor = "center",
                   title_yanchor = "bottom", 
-                  legend_x = 0.05,legend_y = 0.95,
+                  legend_x = 0.01,legend_y = 1,
                   width = 900, height = 600,template = 'gridon',
     
     
@@ -98,7 +99,7 @@ def func_fig_r3(my_region):
     mask = (X.Region ==my_region)
     fig_r3 = go.Figure()
     fig_r3.add_trace(
-       go.Bar(x = X[mask].Date,y=X[mask].Change_dayconf,text = X[mask]['Change_dayconf'],textposition = 'inside',
+       go.Bar(x = X[mask].Date,y=X[mask].Change_dayconf,text = X[mask]['Change_dayconf'],textposition = 'inside',hoverinfo='x+y',
                  marker_color = X[mask]['Change_dayconf'],marker_colorscale = 'Temps',marker_colorbar ={'tickmode':'auto',
                                     'title':{'text':'Изменение','side':'top'}}
                     )   
@@ -147,7 +148,7 @@ def func_fig_r4(my_region):
                   title_y= 0.9,
                   title_xanchor = "center",
                   title_yanchor = "bottom", 
-                  legend_x = 0.05,legend_y = 0.98,
+                  legend_x = 0.01,legend_y = 1,
                   width = 900, height = 600,template = 'gridon',
                  xaxis_title='Текущие больные = количество выявленных - количество выздоровевших - количество умерших',
                  yaxis_title = ' ')
@@ -158,7 +159,7 @@ def func_fig_r5(my_region):
 
     fig_r5 = go.Figure()
     fig_r5.add_trace(
-              go.Bar(x = X[mask].Date,y=X[mask].Change_remill,text = X[mask]['Change_remill'],textposition = 'inside',
+              go.Bar(x = X[mask].Date,y=X[mask].Change_remill,text = X[mask]['Change_remill'],textposition = 'inside',hoverinfo='x+y',
                 
                 marker_color = X[mask]['Change_remill'],marker_colorscale = 'Temps',marker_colorbar ={'tickmode':'auto',
                                     'title':{'text':'Изменение','side':'top'}})     
@@ -191,7 +192,7 @@ for i in x1:
     
 y=list(Z.Region)
 def func_fig_r6(my_region):
-    fig_r6 = ff.create_annotated_heatmap(d, x=x2, y=y, annotation_text=d,
+    fig_r6 = ff.create_annotated_heatmap(d, x=x2, y=y, annotation_text=d,hoverinfo='z',
                                   colorscale='Temps')
 
     fig_r6.update_layout(
@@ -254,7 +255,7 @@ box_cases1 = X[mask].groupby(['Region','Date'])['Day_confirmed'].sum()
 box_cases2 = X[mask].groupby(['Region','Date'])['Day_recovered'].sum()
 new_df1=box_cases1.unstack().T
 cols = list(new_df1.columns)
-color_dict=dict(zip(cols,['green','darkblue','goldenrod','magenta','red']))
+color_dict=dict(zip(cols,['forestgreen','darkblue','goldenrod','magenta','hotpink','grey','maroon','coral','darkorange','lightpink']))
 new_df2=box_cases2.unstack().T
 def func_fig_r9(my_region):
     fig_r9 = make_subplots(rows=2, cols=1,specs = [[{}],[{}]],vertical_spacing = 0.03,shared_xaxes=True,
