@@ -114,5 +114,7 @@ def update_figure(selected_region,chart_type):
         return chart_dict_r[chart_type](selected_region)
     else: return chart_dict_w[chart_type](selected_region)
 
+
+
 if __name__ == '__main__':
     app.run_server(debug=True)
