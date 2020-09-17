@@ -1,4 +1,4 @@
 gunicorn
-dash==1.15.0
-plotly==4.9.0
+dash==1.16.0
+plotly==4.10.0
 pandas
