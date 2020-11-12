@@ -1,4 +1,4 @@
 {
     "python.pythonPath": "C:\\Users\\vitye\\.env\\univer\\Scripts\\python.exe",
-    "python.dataScience.jupyterServerURI": "local"
+    "jupyter.jupyterServerType": "local"
 }
