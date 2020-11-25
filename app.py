@@ -96,7 +96,7 @@ app.layout = html.Div(id="wrapper",
 def set_regions_options(selected_area):
     if selected_area=="Россия":
         return [{'label': i, 'value': i} for i in regions_dict.values() ],regions_dict.get(42)
-    else: return [{'label': i, 'value': i} for i in country_dict.values() ],country_dict.get(132)
+    else: return [{'label': i, 'value': i} for i in country_dict.values() ],country_dict.get(134)
 
 # @app.callback(
 #     Output('regions', 'value'),
