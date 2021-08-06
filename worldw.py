@@ -17,6 +17,7 @@ def my_date1(dt):
 
 W.Date=W.Date.apply(my_date1)
 mydayw = list(W.tail(1).Date)[0]
+mydayw = datetime.date(2021,8,4) #temp change due to bad data
 
 Covid_Rates_w = pd.DataFrame()
 mask = (W.Date==mydayw)&(W.Country!='Весь мир')
